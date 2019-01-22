@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>IGG</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link href="/css/style.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.3/angular.min.js"></script>
+    <script src="/js/funcs.js"></script>
+    <script src="/js/travel.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.css" rel="stylesheet"
+          type="text/css"/>
+</head>
+<body onLoad="resize();">
+
+<div ng-app="HelloApp" ng-controller="TravelCtrl">
+    <form name="myForm">
+
+        <section class="col-md-12 col-lg-12 col-sm-12 col-xs-12" style="margin-bottom: 12px;">
+            <div class="form-group header-group">
+                <h1 ng-click="calculate()">სამოგზაურო დაზღვევის შეძენა<br/>Travel Insurance Purchase</h1>
+                <p style="color: #ff4d4d; font-size: 18px; font-weight: bold;">შეავსეთ მხოლოდ ლათინური ასოებით<br/>Fill in only with Latin letters</p>
+            </div>
+        </section>
+
+        <section class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+            <section class="col-md-4 col-lg-4 col-sm-12 col-xs-12">
+                <div class="form-group">
+                    <label>სახელი/Name: </label>
+                    <input class="form-control" type="text" ng-model="obj.fname" onkeypress="return (event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122) || (event.charCode >= 48 && event.charCode <= 57)" required>
+                </div>
+            </section>
+            <section class="col-md-4 col-lg-4 col-sm-12 col-xs-12">
+                <div class="form-group">
+                    <label>გვარი/Surname: </label>
+                    <input class="form-control" type="text" onkeypress="return (event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122) || (event.charCode >= 48 && event.charCode <= 57)"
+                           ng-model="obj.lname" required>
+                </div>
+            </section>
+            <section class="col-md-4 col-lg-4 col-sm-12 col-xs-12">
+                <div class="form-group">
+                    <label>პირადი ნომერი/Personal Number: </label>
+                    <input class="form-control" type="text" onkeypress="return (event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122) || (event.charCode >= 48 && event.charCode <= 57)"
+                           ng-model="obj.idn" required>
+                </div>
+            </section>
+
+            <section class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                <div class="form-group">
+                    <label>პასპორტის/Passport#: </label>
+                    <input class="form-control" type="text" onkeypress="return (event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122) || (event.charCode >= 48 && event.charCode <= 57)"
+                           ng-model="obj.passportnumber" required>
+                </div>
+            </section>
+            <section class="col-md-6 col-lg-6 col-sm-9 col-xs-9">
+                <div class="form-group">
+                    <label style="width: 100%">მოგზაურობის ქვეყნები/Traveling Countries:
+                        <a ng-click="addCountry(selectedCity);"
+                           style="font-weight: bold;float: right; color: green"
+                           ng-style="selectedCity ? {'display' : 'block'} : {'display' : 'none'}">
+                            დამატება/Add
+                        </a>
+                    </label>
+                    <select class="form-control c-select" ng-model="selectedCity" ng-options="x for x in cities"></select>
+                </div>
+            </section>
+
+            <section class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                <div class="form-group">
+                    <label>სქესი/Gender: </label>
+                    <select class="form-control" ng-model="obj.gender" required>
+                        <option value="">-აირჩიეთ სქესი/Choose Gender-</option>
+                        <option value="F">-მდედრობითი/Female-</option>
+                        <option value="M">-მამრობითი/Male-</option>
+                    </select>
+                </div>
+            </section>
+
+            <section class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                <div class="form-group">
+                    <label>დაბადების თარიღი/Date Of Birth: </label>
+                    <div id="datepicker" class="input-group date" data-date-format="dd/mm/yyyy">
+                        <input class="form-control" type="text"
+                               ng-model="obj.dob" readonly ng-required/>
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                    </div>
+                </div>
+            </section>
+
+            <section class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                <div class="form-group">
+                    <label>დაზღვევის პერიოდი(დან)/Insurance period (From):</label>
+                    <div id="datepicker2" class="input-group date" data-date-format="dd/mm/yyyy">
+                        <input class="form-control" type="text"
+                               ng-model="obj.startdate" readonly ng-required/>
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                    </div>
+                </div>
+            </section>
+
+            <section class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                <div class="form-group">
+                    <label>დაზღვევის პერიოდი(ჩათვლით)/Insurance period (including): </label>
+                    <div id="datepicker3" class="input-group date" data-date-format="dd/mm/yyyy">
+                        <input class="form-control" type="text" onkeypress="return (event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122) || (event.charCode >= 48 && event.charCode <= 57)"
+                               ng-model="obj.enddate" readonly ng-required/>
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                    </div>
+                </div>
+            </section>
+
+            <section class="col-md-4 col-lg-4 col-sm-12 col-xs-12">
+                <div class="form-group">
+                    <label>სადაზღვეო ლიმიტი/Insurance Limit:
+                        <span ng-if="limit == 0"> (ფრანშიზა/Franchise 80 USD)</span>
+                        <span ng-if="limit == 1"> (ფრანშიზა/Franchise 80 EUR)</span>
+                    </label>
+                    <select class="form-control" ng-model="obj.currency" required>
+                        <option value="USD">50,000 USD</option>
+                        <option value="EUR">50,000 EUR</option>
+                    </select>
+                </div>
+            </section>
+            <section class="col-md-4 col-lg-4 col-sm-12 col-xs-12">
+                <div class="form-group">
+                    <label>ელ-ფოსტა/Email: </label>
+                    <input class="form-control" type="text" ng-model="obj.email" required placeholder="someone@email.com">
+                </div>
+            </section>
+
+        </section>
+
+        <section class="col-md-12 col-lg-12 col-sm-12 col-xs-12" ng-if="selectedCities.length > 0">
+            <section class="col-md-12" style="margin-bottom: 20px;">
+                <div class="form-group">
+                    <div ng-repeat="item in selectedCities" class="col col-md-2"
+                         style="background: #452a8c;color: white; text-align: center;height: 40px;line-height: 40px; border-radius: 4px; margin: 4px; cursor: pointer;">
+                        {{item}}
+                        <a ng-click="removeCity(item)" style="position: absolute; right: 8px;top: -9px;color: #ff4d4d;font-size: 18px;font-weight: bold;">x</a>
+                    </div>
+                </div>
+            </section>
+        </section>
+
+        <hr/>
+
+        <section class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+            <section class="col-md-3">
+                <div class="form-group">
+                    <input type="checkbox" value="" ng-model="obj.bagage"/>
+                    <label>ბარგის დაზღვევა/Luggage insurance:</label>
+                </div>
+            </section>
+        </section>
+        <section class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+            <section class="col-md-3">
+                <div class="form-group">
+
+                    <input type="checkbox" value="" ng-model="agreed"/>
+                    <label>ვეთანხმები/Agree <a href="/res/travel.pdf" target="_blank" style="color: #412F87; cursor: pointer;"><b>პირობებს/Terms</b></a>:</label>
+                </div>
+            </section>
+        </section>
+
+        <section class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+            <section class="col-md-10">
+                <div class="form-group">
+                    <button ng-disabled="myForm.$invalid || selectedCities.length == 0 || !agreed" style="color: #ffffff"
+                            type="button" ng-click="add()" ng-style="(!myForm.$invalid && selectedCities.length > 0 && agreed) ? {'background-color':'green'} : {'background-color':'gray'}" class="btn btn-default">
+                        პოლისის შეძენა/Buy Policy ({{ calculate() }} ლარი/GEL)
+                    </button>
+                </div>
+            </section>
+        </section>
+
+    </form>
+</div>
+
+</body>
+</html>

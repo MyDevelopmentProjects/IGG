@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <style>
+
+        .center {
+            width: 200px;
+            height: 600px;
+            line-height: 600px;
+            text-align: center;
+            position:absolute;
+            left:0; right:0;
+            top:0; bottom:0;
+            margin:auto;
+
+            max-width:100%;
+            max-height:100%;
+            overflow:auto;
+        }
+    </style>
+</head>
+<body onLoad="resize();">
+
+<div class="center" th:if="${lnk != null}">
+    <a href="#" id="lnk" th:attr="lnk=${lnk}" onClick="MyWindow=window.open(document.getElementById('lnk').getAttribute('lnk'),'MyWindow',width=800,height=600); return false;">
+        <img src="/images/ic_pdf.png">
+    </a>
+</div>
+
+</body>
+</html>

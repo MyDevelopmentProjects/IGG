@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>IGG</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.3/angular.min.js"></script>
+    <script src="/js/funcs.js"></script>
+    <script src="/js/docSign.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.css" rel="stylesheet" type="text/css" />
+    <style>
+        ul li {
+            border-bottom: solid 1px #c2c2c2;
+            padding-bottom: 8px;
+            margin-bottom: 12px;
+        }
+    </style>
+</head>
+<body onLoad="resize();">
+
+<div ng-app="HelloApp" ng-controller="DocSign">
+
+    <section class="col-md-12">
+        <section class="col-md-12" style="margin-bottom: 12px;">
+            <div class="form-group header-group">
+                <h1>დოკუმენტაციის ატვირთვა/Document Upload</h1>
+            </div>
+        </section>
+    </section>
+
+    <section class="col-md-12">
+
+        <section class="col-md-4">
+            <div class="form-group">
+                <label>სახელი, გვარი/Name, Surname: </label>
+                <input class="form-control" type="text"
+                       ng-model="object.fullName" ng-required>
+            </div>
+        </section>
+
+        <section class="col-md-4">
+            <div class="form-group">
+                <label>მობილური ტელეფონი/Phone: </label>
+                <input class="form-control" type="number" placeholder="+xxx xxx xxx"
+                       ng-model="object.mobile" ng-required>
+            </div>
+        </section>
+
+        <section class="col-md-4">
+            <div class="form-group">
+                <label>ელ-ფოსტა/Email: </label>
+                <input class="form-control" type="email" placeholder="johndoe@gmail.com"
+                       ng-model="object.email" ng-required>
+            </div>
+        </section>
+
+        <section class="col-md-12" ng-if="object.mobile && object.fullName && object.email">
+            <section class="col-md-3">
+                <div class="form-group">
+                    <label>დოკუმენტაციის ჩამონათვალი/List Of Documents:</label>
+                    <p>დასაშვები ფორმატები/Allowed Formats: (png, jpg, jpeg, doc, docx, xls, xlsx, pdf)</p>
+                    <p>
+                    <ul>
+                        <li>პოლისი/Policy<input type="file" id="polisi" name="file[]"/></li>
+                        <li>პირადობის ასლი/Copy of ID card<input type="file" id="pid" name="file[]"/></li>
+                        <li>ჩეკი/Check<input type="file" id="check" name="file[]"/></li>
+                        <li>ქვითარი(სალაროს შემოსავლის ორდერი)/Receipt (cash revenue order)<input type="file" id="qv" name="file[]"/></li>
+                        <li>ფორმა №IV-100(სრულად შევსებული)/Form №IV-100 (fully filled)<input type="file" id="form100" name="file[]"/></li>
+                        <li>ანგარიშის/Account #<input type="file" id="accNo" name="file[]"/></li>
+                    </ul>
+                    </p>
+                </div>
+            </section>
+        </section>
+
+        <section class="col-md-12">
+            <section class="col-md-10">
+                <div class="form-group">
+                    <button ng-disabled="!object.email || !object.fullName || !object.mobile || isLoading" type="button" ng-click="add()" class="btn btn-default">ატვირთვა/Upload</button>
+                </div>
+            </section>
+        </section>
+
+    </section>
+
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,27 @@
+@font-face {
+    font-family: "geoCaps";
+    src: url("../fonts/BPG-Arial-Caps-2010.ttf");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "geo";
+    src: url("../fonts/BPG-Arial-2010.ttf");
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+    font-family: geo;
+}
+
+.header-group {
+    text-align: center;
+    background: #412F87;
+    padding: 10px;
+}
+
+.header-group h1 {
+    color: #FFFFFF;
+}

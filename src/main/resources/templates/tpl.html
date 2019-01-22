@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>IGG</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link href="/css/style.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.3/angular.min.js"></script>
+    <script src="/js/funcs.js"></script>
+    <script src="/js/tpl.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.css" rel="stylesheet"
+          type="text/css"/>
+</head>
+<body onLoad="resize();">
+
+<div ng-app="HelloApp" ng-controller="TplCtrl">
+
+    <form name="myForm">
+
+        <section class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+            <section class="col-md-12 col-lg-12 col-sm-12 col-xs-12" style="margin-bottom: 12px;">
+                <div class="form-group header-group">
+                    <h1>ავტომფლობელის პასუხისმგებლობის დაზღვევა<br/>Vehicle insurance liability insurance</h1>
+                </div>
+            </section>
+
+        </section>
+
+        <section class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+
+
+            <section class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                <div class="form-group">
+                    <label>პასუხისმგებლობის დაზღვეის ლიმიტი/Liability insurance limit:</label>
+                    <select class="form-control" id="limit" ng-model="object.limit">
+                        <option value="">-აირჩიეთ ლიმიტი/Choose limit-</option>
+                        <option value="5000" price="60">5000</option>
+                        <option value="10000" price="100">10,000</option>
+                        <option value="20000" price="200">20,000</option>
+                        <option value="30000" price="300">30,000</option>
+                    </select>
+                </div>
+            </section>
+
+            <section class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                <div class="form-group">
+                    <label>გადახდის გრაფიკი/Payment schedule:</label>
+                    <select class="form-control" ng-model="object.paymentschedule">
+                        <option value="">-აირჩიეთ გრაფიკი/Choose schedule-</option>
+                        <option value="1">ერთჯერადი/One time</option>
+                        <option value="2">კვარტლური/Four quarters</option>
+                        <option value="12">ყოველთვიური/Monthly</option>
+                    </select>
+                </div>
+            </section>
+
+            <section class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                <div class="form-group">
+                    <label>დაბადების თარიღი/Date Of Birth: </label>
+                    <div id="datepicker" class="input-group date" data-date-format="dd/mm/yyyy">
+                        <input class="form-control" type="text"
+                               ng-model="object.dob" readonly ng-required/>
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                    </div>
+                </div>
+            </section>
+
+            <section class="col-md-4 col-lg-4 col-sm-12 col-xs-12">
+                <div class="form-group">
+                    <label>სახელი/Firstname: </label>
+                    <input class="form-control" type="text"
+                           ng-model="object.fname" required>
+                </div>
+            </section>
+
+            <section class="col-md-4 col-lg-4 col-sm-12 col-xs-12">
+                <div class="form-group">
+                    <label> გვარი/Surname: </label>
+                    <input class="form-control" type="text"
+                           ng-model="object.lname" required>
+                </div>
+            </section>
+
+            <section class="col-md-4 col-lg-4 col-sm-12 col-xs-12">
+                <div class="form-group">
+                    <label>პირადი ნომერი/Personal Number: </label>
+                    <input class="form-control" placeholder="###########" minlength="11" maxlength="11" min="11" max="11" ng-min="11" ng-max="11" type="text"
+                           ng-model="object.idn" required>
+                </div>
+            </section>
+
+
+            <section class="col-md-4 col-lg-4 col-sm-12 col-xs-12">
+                <div class="form-group">
+                    <label>მობილური ტელეფონი/Phone: </label>
+                    <input class="form-control" type="number" placeholder="+xxx xxxx xxx"
+                           ng-model="object.phone" required>
+                </div>
+            </section>
+
+            <section class="col-md-4 col-lg-4 col-sm-12 col-xs-12">
+                <div class="form-group">
+                    <label>ელ-ფოსტა/Email: </label>
+                    <input class="form-control" type="email" placeholder="johndoe@gmail.com"
+                           ng-model="object.email" required>
+                </div>
+            </section>
+
+
+            <section class="col-md-4 col-lg-4 col-sm-12 col-xs-12">
+                <div class="form-group">
+                    <label>მისამართი/Address: </label>
+                    <input class="form-control" type="text"
+                           ng-model="object.address" required>
+                </div>
+            </section>
+
+            <section class="col-md-4 col-lg-4 col-sm-12 col-xs-12">
+                <div class="form-group">
+                    <label>სახელმწიფო ნომერი/Vehicle state number: </label>
+                    <input class="form-control" ng-min="6" ng-max="7" minlength="6" maxlength="7" min="6" max="7"
+                           type="text" ng-model="object.platenumber" required>
+                </div>
+            </section>
+
+            <section class="col-md-4 col-lg-4 col-sm-12 col-xs-12">
+                <div class="form-group">
+                    <label>ტექ პასპორტის ნომერი/Tech passport number: </label>
+                    <input class="form-control" type="text"
+                           ng-model="object.vehiclepassportnumber" required>
+                </div>
+            </section>
+
+
+            <section class="col-md-4 col-lg-4 col-sm-12 col-xs-12">
+                <div class="form-group">
+                    <label>VIN CODE: </label>
+                    <input class="form-control" ng-min="15" ng-max="17" minlength="15" maxlength="17" min="15" max="17" type="text"
+                           ng-model="object.vin" required>
+                </div>
+            </section>
+
+
+            <section class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                <section class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                    <div class="form-group">
+                        <input type="checkbox" value="" ng-model="agreed"/>
+                        <label>ვეთანხმები/Agree <a href="/res/tpl.pdf" target="_blank" style="color: #412F87;"><b>პირობებს/Terms</b></a>:</label>
+                    </div>
+                </section>
+            </section>
+
+            <section class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                <section class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                    <div class="form-group">
+                        <button ng-disabled="myForm.$invalid || !agreed"
+                                type="button" ng-click="add()" class="btn btn-default"
+                                style="color: white;"
+                                ng-style="(!myForm.$invalid && agreed) ? {'background-color':'green'} : {'background-color':'gray'}">
+                            გადახდა/Pay {{ '(' + calculate() + ') GEL' }}
+                        </button>
+                    </div>
+                </section>
+            </section>
+
+        </section>
+
+    </form>
+
+</div>
+
+</body>
+</html>

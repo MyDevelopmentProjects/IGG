@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>IGG</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.3/angular.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+    <script src="/js/funcs.js"></script>
+    <script src="/js/doctor.js"></script>
+    <link href="/css/style.css" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.css" rel="stylesheet" type="text/css" />
+</head>
+<body onLoad="resize();">
+
+<div ng-app="HelloApp" ng-controller="DocVisit">
+
+    <section class="col-md-12">
+        <section class="col-md-12" style="margin-bottom: 12px;">
+            <div class="form-group header-group">
+                <h1>ექიმთან ჩაწერა/Visit to doctor</h1>
+            </div>
+        </section>
+    </section>
+
+    <section class="col-md-12">
+
+        <div class="table-responsive col-md-12">
+            <div class="form-group">
+                <label>აირჩიეთ ქალაქი:/Choose city </label>
+                <select class="form-control" id="city" ng-model="city" ng-change="loadDoctors()">
+                    <option value="თბილისი">თბილისი/Tbilisi</option>
+                    <option value="გორი">გორი/Gori</option>
+                    <option value="რუსთავი">რუსთავი/Rustavi</option>
+                    <option value="თელავი">თელავი/Telavi</option>
+                    <option value="ქუთაისი">ქუთაისი/Kutaisi</option>
+                    <option value="ტყიბული">ტყიბული/Tkhibuli</option>
+                    <option value="ბათუმი">ბათუმი/Batumi</option>
+                    <option value="სენაკი">სენაკი/Senaki</option>
+                    <option value="კასპი">კასპი/Kaspi</option>
+                    <option value="სამტრედია">სამტრედია/Samtredia</option>
+                    <option value="მცხეთა">მცხეთა/Mtskheta</option>
+                    <option value="გარდაბანი">გარდაბანი/Gardabani</option>
+                    <option value="ხაშური">ხაშური/Khashuri</option>
+                    <option value="ფოთი">ფოთი/Poti</option>
+                    <option value="ზესტაფონი">ზესტაფონი/Zestaponi</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="table-responsive col-md-12">
+            <table class="table table-bordered table-hover">
+                <thead>
+                <tr>
+                    <th data-class="expand">
+                        სახელი, გვარი/ Name, Surname
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="item in doctors" style="cursor: pointer;">
+                    <td ng-click="chooseDoc(item)">{{item.name}}</td>
+                </tr>
+                <tr ng-if="!doctors.length" class="text-center">
+                    <td colspan="100" class="warning">ჩანაწერები ვერ მოიძებნა/Data Not Found</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+
+        <!--<section class="col-md-6">
+            <div class="form-group">
+                <label>პირადი#: </label>
+                <input class="form-control" type="text"
+                       ng-model="object.pid" required>
+            </div>
+        </section>-->
+
+    </section>
+
+
+    <div class="modal fade" id="showAddEdit" role="dialog">
+        <div class="modal-dialog modal-lg" ng-form="addEditForm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">ექიმი/Doctor: <b>{{object.name}}
+                        <span ng-if="selectedDate" style="color: #d43f3a;">
+                             &nbsp;&nbsp; {{selectedDate.timestart}} - {{selectedDate.timeend}}
+                        </span>
+                        </b>
+                    </h5>
+                </div>
+                <div class="modal-body p-lg">
+                    <div class="row" style="text-align: center;margin-bottom: 12px;color: #db481c;">
+                        <h4 style="font-size: 15px;font-weight: bold;">შაბათ დღეს ჩაწერა მოხდება ცხელი ხაზის მეშვეობით<br/>Orders on Saturdays will be recorded via hot line</h4>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>თარიღი/Date: </label>
+                                <div id="datepicker" class="input-group date" data-date-format="mm/dd/yyyy">
+                                    <input class="form-control" type="text" ng-change="getDocAvailDates()"
+                                           ng-model="availDate" readonly ng-required/>
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label>შეამოწმეთ ექიმის დრო/Check Avail</label>
+                                <button type="button" ng-disabled="!availDate" ng-click="checkDoctorAvail()" class="form-control btn btn-danger">
+                                    შემოწმება/Check
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <section ng-if="docAvailDates && docAvailDates.length > 0">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <th data-class="expand">
+                                        თარიღი,დრო/Date,Time
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="item in docAvailDates" style="cursor: pointer; background: {{idx == $index ? 'green; color:#FFF;' : '#FFFFFF'}}">
+                                    <td ng-click="chooseDate($index,item)">{{item.timestart}} - {{item.timeend}}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <input class="form-control" type="text" maxlength="11" id="pid" placeholder="პირადი ნომერი / Personal number" ng-if="object.doctorid && selectedDate" />
+                    </section>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn dark-white p-x-md" data-dismiss="modal">დახურვა/Close</button>
+                    <button style="float: left; background: green; color: #FFF;" type="button" class="btn p-x-md green"
+                            ng-disabled="!selectedDate" ng-click="doVisit()">ჩაწერა/Order
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>
